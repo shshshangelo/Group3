@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+/* Breadcrumb styles */
+.breadcrumb {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.breadcrumb li {
+    display: inline;
+    margin-right: 5px;
+}
+
+.breadcrumb li:not(:last-child)::after {
+    margin-left: 5px;
+}
+
+/* Highlight active breadcrumb link */
+.breadcrumb li a.active {
+    color: white; /* Highlight color */
+    transition: color 0.3s; /* Add transition effect */
+    border-radius: 10px;
+    border: none;
+    padding: 5px 10px; /* Add padding to create space between text and border */
+    display: inline-block; /* Ensure the border wraps around the text */
+    background-color: red; /* Lighter background color inside the box */
+}
+
+/* Hover effect for active breadcrumb link */
+.breadcrumb li a.active:hover {
+    color: black; /* Hover color */
+}
+
+footer {
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Responsive styles */
+
+/* For screens smaller than 768px (tablets and smaller devices) */
+@media (max-width: 768px) {
+    header {
+        padding: 10px;
+    }
+
+    nav ul li {
+        margin: 0 10px;
+    }
+
+    main {
+        padding: 10px;
+    }
+}
+
+/* For screens smaller than 480px (phones) */
+@media (max-width: 480px) {
+    nav ul li {
+        display: block;
+        margin: 5px 0;
+    }
+
+    .breadcrumb li:not(:last-child)::after {
+        content: "/";
+        margin-left: 5px;
+    }
+}

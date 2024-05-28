@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Offline Game</h1>
+        <nav>
+            <ul>
+			    <ul id="breadcrumb" class="breadcrumb">
+                <li><a href="index.html">Homepage</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="members.html">Team Members</a></li>
+				<li><a href="offgames.html">Offline Game</a></li>
+            </ul>
+        </nav>
+    </header>
+	
+    <main>
+        <div class="game-container">
+            <h2 class="game-title">Snake Game - Offline</h2>
+            <p class="game-description">Get ready to have some fun with snake!</p>
+            <button class="play-button" onclick="startGame()">Play Now</button>
+			<br>
+			<br>
+        </div>
+		
+		    <style>
+        .play-button {
+            background-color: #ff0000;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .play-button:hover {
+            background-color: #cc0000;
+        }
+
+        #gameCanvas {
+            border: 2px solid #333;
+            display: none; /* Initially hide the canvas */
+            margin: 0 auto; /* Center the canvas horizontally */
+        }
+    </style>
+		
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+    <script>
+        // JavaScript code for the snake game
+        // You can add your game logic here
+
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let snake = [{x: 10, y: 10}];
+        let food = {x: Math.floor(Math.random() * (canvas.width / 10)) * 10, y: Math.floor(Math.random() * (canvas.height / 10)) * 10};
+        let dx = 10;
+        let dy = 0;
+        let gameInterval;
+        let score = 0;
+
+        function drawSnake() {
+            ctx.fillStyle = "green";
+            snake.forEach(segment => {
+                ctx.fillRect(segment.x, segment.y, 10, 10);
+            });
+        }
+
+        function drawFood() {
+            ctx.fillStyle = "red";
+            ctx.fillRect(food.x, food.y, 10, 10);
+        }
+
+        function moveSnake() {
+            const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+            snake.unshift(head);
+            if (head.x === food.x && head.y === food.y) {
+                food = {x: Math.floor(Math.random() * (canvas.width / 10)) * 10, y: Math.floor(Math.random() * (canvas.height / 10)) * 10};
+                score += 10;
+            } else {
+                snake.pop();
+            }
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function checkCollision() {
+            if (snake[0].x < 0 || snake[0].x >= canvas.width || snake[0].y < 0 || snake[0].y >= canvas.height) {
+                clearInterval(gameInterval);
+                alert("Game Over! Your score: " + score);
+            }
+        }
+
+        function gameLoop() {
+            clearCanvas();
+            drawFood();
+            drawSnake();
+            moveSnake();
+            checkCollision();
+            drawScore();
+        }
+
+        function drawScore() {
+            ctx.fillStyle = "#333";
+            ctx.font = "20px Arial";
+            ctx.fillText("Score: " + score, 10, 30);
+        }
+
+        function startGame() {
+            document.getElementById("gameCanvas").style.display = "block"; // Display the canvas
+            score = 0;
+            snake = [{x: 10, y: 10}];
+            dx = 10;
+            dy = 0;
+            food = {x: Math.floor(Math.random() * (canvas.width / 10)) * 10, y: Math.floor(Math.random() * (canvas.height / 10)) * 10};
+            gameInterval = setInterval(gameLoop, 100);
+            document.addEventListener("keydown", (event) => {
+                const keyPressed = event.key;
+                if (keyPressed === "ArrowUp" && dy === 0) {
+                    dx = 0;
+                    dy = -10;
+                } else if (keyPressed === "ArrowDown" && dy === 0) {
+                    dx = 0;
+                    dy = 10;
+                } else if (keyPressed === "ArrowLeft" && dx === 0) {
+                    dx = -10;
+                    dy = 0;
+                } else if (keyPressed === "ArrowRight" && dx === 0) {
+                    dx = 10;
+                    dy = 0;
+                }
+            });
+        }
+    </script>
+	
+    </main>
+    <footer>
+        <p>&copy; 2024 Group3</p>
+    </footer>
+		    <script src="breadcrumb.js"></script>
+</body>
+</html>
